@@ -85,4 +85,18 @@ for col in cat_columns:
 def feature_class_correlation(df, feature):
     return df.groupby(feature)['class'].value_counts()
 
+# Pivot-table by three picked features
+def feature_mean_cap_diameter(df, feature_1, feature_2, feature_3):
+    return pd.pivot_table(df, values='cap-diameter', index=[feature_1, feature_2], columns=[feature_3], aggfunc="mean")
+
+# Class ranged by picked range of stem-height
+def class_ranged_by_stem_height(df, begin, end):
+    df_picked = df[(df['stem-height'] >= begin) & (df['stem-height'] <= end)]
+    return df_picked['class']
+
+# Cap-diameters and stem-heights by stem-width and season
+def cap_diams_stem_heights(df, width_begin, width_end, season):
+    df_clean = df[(df['stem-width']>=width_begin) & (df['stem-width']<=width_end) & (df['season']==season)]
+    return df_clean[['cap-diameter', 'stem-height']]
+
 print(feature_class_correlation(data, 'cap-shape'))
