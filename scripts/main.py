@@ -7,6 +7,7 @@ Performed by: Shmelev Anton, Ro Alexander, Chapaykin Arseniy, Andreev Alexander
 
 import pandas as pd
 import numpy as np
+import seaborn as sns
 
 def configure_guides(path):
 	"""
@@ -98,5 +99,28 @@ def class_ranged_by_stem_height(df, begin, end):
 def cap_diams_stem_heights(df, width_begin, width_end, season):
     df_clean = df[(df['stem-width']>=width_begin) & (df['stem-width']<=width_end) & (df['season']==season)]
     return df_clean[['cap-diameter', 'stem-height']]
+
+
+# Boxplot of any numeric feature divided by class
+def class_boxplot(df, numeric_feature):
+    return sns.boxplot(data=df, x='class', y=numeric_feature, hue='class', showfliers=False)
+
+# Hist of cap-diameters with division by any object feature
+def cap_diameter_histplot(df, hue):
+    return sns.histplot(data=df, x='cap-diameter', hue=hue, binrange=(0, 17))
+
+# Scatterplot of stem-height and any numeric feature
+def stem_height_scatterplot(df, numeric_feature, hue):
+    return sns.scatterplot(data=df, x="stem-height", y=numeric_feature, hue=hue)
+
+# Boxplot of cap-diameter with division by any object feature
+def stem_width_boxplot(df, object_feature):
+    return sns.boxplot(data=df, x='cap-diameter', y=object_feature, showfliers=False)
+
+
+##print(class_boxplot(df, 'stem-width'))
+##print(cap_diameter_histplot(df, 'class'))
+##print(stem_height_scatterplot(df, 'stem-width', 'class'))
+##print(stem_width_boxplot(df, 'season'))
 
 print(feature_class_correlation(data, 'cap-shape'))
