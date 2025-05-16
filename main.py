@@ -8,35 +8,24 @@ def fetch_parameters() -> list:
 
     rendered = []
     for param in params.items():
-        if param[1]["type"] == "text":
-            if param[1]["possible_values"] is None:
-                rendered.append("text")
+        name = " ".join(param[0].split("-")).capitalize()
+        value_type = param[1]["type"]
+
+        if value_type == "text":
+            values = param[1]["possible_values"]
+            if values is None:
+                rendered.append(gr.Textbox(label=name, lines=1))
             else:
-                rendered.append(gr.Radio(param[1]["possible_values"]))
-        elif param[1]["type"] == "number":
-            rendered.append("number")
+                rendered.append(gr.Radio(values, label=name))
+        elif value_type == "number":
+            rendered.append(gr.Number(label=name))
         else:
             raise KeyError
 
     return rendered
 
 
-def debug(
-    cap_shape: str,
-    cap_surface: str,
-    cap_color: str,
-    does_bruise_or_bleed: str,
-    gill_attachment: str,
-    gill_color: str,
-    stem_color: str,
-    has_ring: str,
-    ring_type: str,
-    habitat: str,
-    season: str,
-    cap_diameter: float,
-    stem_hight: float,
-    stem_width: float
-) -> str:
+def debug(*args) -> str:
     return "A-OK"
 
 
