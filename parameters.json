@@ -1,0 +1,55 @@
+{
+  "cap-shape": {
+    "type": "text",
+    "possible_values": ["convex", "bell-shaped", "conical", "knobbed", "flat", "sunken"]
+  },
+  "cap-surface": {
+    "type": "text",
+    "possible_values": ["smooth", "velvety", "fibrous", "raised scales", "flat scales", "patches"]
+  },
+  "cap-color": {
+    "type": "text",
+    "possible_values": null
+  },
+  "does-bruise-or-bleed": {
+    "type": "text",
+    "possible_values": ["bruise", "bleed"]
+  },
+  "gill-attachment": {
+    "type": "text",
+    "possible_values": ["adnate", "adnexed", "notched", "seceding", "descending", "free"]
+  },
+  "gill-color": {
+    "type": "text",
+    "possible_values": null
+  },
+  "stem-color": {
+    "type": "text",
+    "possible_values": null
+  },
+  "has-ring": {
+    "type": "text",
+    "possible_values": ["true", "false"]
+  },
+  "ring-type": {
+    "type": "text",
+    "possible_values": ["pendant", "flaring", "sheathing", "double", "cobwebby", "ring zone"]
+  },
+  "habitat": {
+    "type": "text",
+    "possible_values": null
+  },
+  "season": {
+    "type": "text",
+    "possible_values": ["summer", "fall", "winter", "spring"]
+  },
+  "cap-diameter": {
+    "type": "number"
+  },
+  "stem-height": {
+    "type": "number"
+  },
+  "stem-width": {
+    "type": "number"
+  }
+}
