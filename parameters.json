@@ -1,10 +1,12 @@
 {
   "cap-shape": {
     "type": "text",
+    "image": "resources/cap-shape.jpg",
     "possible_values": ["convex", "bell-shaped", "conical", "knobbed", "flat", "sunken"]
   },
   "cap-surface": {
     "type": "text",
+    "image": "resources/cap-surface.jpg",
     "possible_values": ["smooth", "velvety", "fibrous", "raised scales", "flat scales", "patches"]
   },
   "cap-color": {
@@ -17,6 +19,7 @@
   },
   "gill-attachment": {
     "type": "text",
+    "image": "resources/gill-attachment.jpg",
     "possible_values": ["adnate", "adnexed", "notched", "seceding", "descending", "free"]
   },
   "gill-color": {
@@ -33,7 +36,9 @@
   },
   "ring-type": {
     "type": "text",
-    "possible_values": ["pendant", "flaring", "sheathing", "double", "cobwebby", "ring zone"]
+    "image": "resources/ring-type.jpg",
+    "possible_values": ["pendant", "flaring", "sheathing", "double", "cobwebby", "ring zone"],
+    "prerequisites": ["has-ring"]
   },
   "habitat": {
     "type": "text",

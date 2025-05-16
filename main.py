@@ -2,80 +2,84 @@ import json
 import gradio as gr
 
 
-def fetch_parameters() -> list:
+def fetch_parameters():
     with open("parameters.json") as file:
         params = json.load(file)
 
-    has_image = ["cap-shape", "cap-surface", "gill-attachment", "ring-type"]
     parameters = []
 
     for param_key, param_info in params.items():
         parameters.append({
-            "name": " ".join(param_key.split("-")).capitalize(),
+            "name": param_key,
             "type": param_info["type"],
             "values": param_info.get("possible_values"),
-            "image": f"resources/{param_key}.jpg" if param_key in has_image else None
+            "image": param_info.get("image"),
+            "prerequisites": param_info.get("prerequisites")
         })
 
     return parameters
 
 
-def deduce_block_type(param: dict):
-    if param["image"] is not None:
-        image = gr.Image(param["image"], interactive=False, show_label=False, height=100)
-    else:
-        image = None
+def create_component(param):
+    image = gr.Image(param["image"], interactive=False, show_label=False, height=100) \
+        if param["image"] is not None else None
+
+    kwargs = {"label": " ".join(param["name"].split("-")).capitalize()}
 
     if param["type"] == "text":
-        if param["values"] is None:
-            return (image, gr.Textbox(label=param["name"], lines=1))
-        return (image, gr.Radio(param["values"], label=param["name"]))
+        return (image, gr.Textbox(**kwargs)) \
+            if param["values"] is None else (image, gr.Radio(param["values"], **kwargs))
 
     if param["type"] == "number":
-        return (image, gr.Number(label=param["name"]))
+        return (image, gr.Number(**kwargs))
 
     if param["type"] == "bool":
-        return (image, gr.Checkbox(label=param["name"]))
+        return (image, gr.Checkbox(**kwargs))
 
     raise KeyError(f"Invalid type {param['type']}")
 
 
-def debug(*args) -> str:
+def setup_visibility(components, connections):
+    for lhs, rhs in connections:
+        parent = components[lhs]
+        child = list(map(lambda x: x, components[rhs]))
+
+        for element in child:
+            element.visible = False
+
+        parent[1].change(
+            lambda x, child=child:
+                [gr.update(visible=x) for _ in child],
+            inputs=parent[1],
+            outputs=child
+        )
+
+
+def debug(*args):
     return "A-OK"
 
 
 def main():
     with gr.Blocks() as demo:
-        components = []
-
-        has_ring = None
-        ring_type = None
-        ring_type_image = None
+        components = {}
+        connections = []
 
         for param in fetch_parameters():
             with gr.Group():
-                image, input = deduce_block_type(param)
+                image, element = create_component(param)
+                components[param["name"]] = (image, element)
 
-                if param["name"] == "Has ring":
-                    has_ring = input
-                elif param["name"] == "Ring type":
-                    ring_type = input
-                    ring_type_image = image
+                if param["prerequisites"]:
+                    connections.extend((parent, param["name"])
+                                       for parent in param["prerequisites"])
 
-                components.append(input)
+        setup_visibility(components, connections)
 
-        ring_type.visible = False
-        ring_type_image.visible = False
-
-        has_ring.change(
-            lambda x: [gr.update(visible=x), gr.update(visible=x)],
-            inputs=has_ring,
-            outputs=[ring_type_image, ring_type]
+        gr.Button("Submit").click(
+            fn=debug,
+            inputs=[comp[1] for comp in components.values()],
+            outputs=gr.Textbox(label="Result")
         )
-
-        submit_button = gr.Button("Submit")
-        output = gr.Textbox(label="Result")
-        submit_button.click(fn=debug, inputs=components, outputs=output)
 
     demo.launch()
 
