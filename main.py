@@ -66,9 +66,7 @@ def main():
 
         for param in fetch_parameters():
             with gr.Group():
-                image, element = create_component(param)
-                components[param["name"]] = (image, element)
-
+                components[param["name"]] = create_component(param)
                 if param["prerequisites"]:
                     connections.extend((parent, param["name"])
                                        for parent in param["prerequisites"])
