@@ -26,12 +26,16 @@ def debug(*args) -> str:
 
 def main():
     with gr.Blocks() as demo:
-        input_components = []
+        components = []
+
+        has_ring = None
+        ring_type = None
+        ring_type_image = None
 
         for param in fetch_parameters():
             with gr.Group():
                 if param["image"] is not None:
-                    gr.Image(param["image"], interactive=False, show_label=False, height=100)
+                    image = gr.Image(param["image"], interactive=False, show_label=False, height=100)
 
                 if param["type"] == "text":
                     if param["values"] is None:
@@ -40,14 +44,31 @@ def main():
                         input = gr.Radio(param["values"], label=param["name"])
                 elif param["type"] == "number":
                     input = gr.Number(label=param["name"])
+                elif param["type"] == "bool":
+                    input = gr.Checkbox(label=param["name"])
                 else:
                     raise KeyError(f"Invalid type {param['type']}")
 
-                input_components.append(input)
+                if param["name"] == "Has ring":
+                    has_ring = input
+                elif param["name"] == "Ring type":
+                    ring_type = input
+                    ring_type_image = image
+
+                components.append(input)
+
+        ring_type.visible = False
+        ring_type_image.visible = False
+
+        has_ring.change(
+            lambda x: [gr.update(visible=x), gr.update(visible=x)],
+            inputs=has_ring,
+            outputs=[ring_type_image, ring_type]
+        )
 
         submit_button = gr.Button("Submit")
         output = gr.Textbox(label="Result")
-        submit_button.click(fn=debug, inputs=input_components, outputs=output)
+        submit_button.click(fn=debug, inputs=components, outputs=output)
 
     demo.launch()
 

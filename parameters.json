@@ -28,7 +28,7 @@
     "possible_values": null
   },
   "has-ring": {
-    "type": "text",
+    "type": "bool",
     "possible_values": ["true", "false"]
   },
   "ring-type": {
