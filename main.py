@@ -20,6 +20,26 @@ def fetch_parameters() -> list:
     return parameters
 
 
+def deduce_block_type(param: dict):
+    if param["image"] is not None:
+        image = gr.Image(param["image"], interactive=False, show_label=False, height=100)
+    else:
+        image = None
+
+    if param["type"] == "text":
+        if param["values"] is None:
+            return (image, gr.Textbox(label=param["name"], lines=1))
+        return (image, gr.Radio(param["values"], label=param["name"]))
+
+    if param["type"] == "number":
+        return (image, gr.Number(label=param["name"]))
+
+    if param["type"] == "bool":
+        return (image, gr.Checkbox(label=param["name"]))
+
+    raise KeyError(f"Invalid type {param['type']}")
+
+
 def debug(*args) -> str:
     return "A-OK"
 
@@ -34,20 +54,7 @@ def main():
 
         for param in fetch_parameters():
             with gr.Group():
-                if param["image"] is not None:
-                    image = gr.Image(param["image"], interactive=False, show_label=False, height=100)
-
-                if param["type"] == "text":
-                    if param["values"] is None:
-                        input = gr.Textbox(label=param["name"], lines=1)
-                    else:
-                        input = gr.Radio(param["values"], label=param["name"])
-                elif param["type"] == "number":
-                    input = gr.Number(label=param["name"])
-                elif param["type"] == "bool":
-                    input = gr.Checkbox(label=param["name"])
-                else:
-                    raise KeyError(f"Invalid type {param['type']}")
+                image, input = deduce_block_type(param)
 
                 if param["name"] == "Has ring":
                     has_ring = input
