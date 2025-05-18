@@ -1,2 +1,2 @@
-.venv/
-.gradio/
+.idea/
+data/dataset.csv
