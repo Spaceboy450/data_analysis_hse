@@ -2,7 +2,7 @@ import json
 import gradio as gr
 
 def fetch_parameters():
-    with open("./resources/parameters.json") as file:
+    with open("../resources/parameters.json") as file:
         params = json.load(file)
 
     parameters = []
@@ -120,11 +120,11 @@ def main():
                 'cap-shape': ['b', 'c', 'x', 'f', 'k', 's'],
                 'cap-surface': ['f', 'g', 'y', 's'],
                 'cap-color': ['n', 'b', 'c', 'g', 'r', 'p', 'u', 'e', 'w', 'y'],
-                'does-bruise-or-bleed': ['f', 't'],
+                'does-bruise-or-bleed': ['t', 'f'],
                 'gill-attachment': ['a', 'd', 'f', 'n'],
                 'gill-color': ['k', 'n', 'b', 'h', 'g', 'r', 'o', 'p', 'u', 'e', 'w', 'y'],
                 'stem-color': ['n', 'b', 'c', 'g', 'o', 'p', 'e', 'w', 'y'],
-                'has-ring': ['f', 't'],
+                'has-ring': ['t', 'f'],
                 'ring-type': ['c', 'e', 'f', 'l', 'n', 'p', 's', 'z'],
                 'habitat': ['g', 'l', 'm', 'p', 'u', 'w', 'd'],
                 'season': ['a', 'w', 'u', 's']
@@ -150,7 +150,7 @@ def main():
                 return letters[index]
 
             model = CatBoostClassifier()
-            model.load_model("./notes/classifier.cbm")
+            model.load_model("../notes/classifier.cbm")
 
             preprocessor = joblib.load("my_preprocessor.pkl")
 

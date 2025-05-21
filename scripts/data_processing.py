@@ -62,9 +62,13 @@ class DataPreprocessor(TransformerMixin, BaseEstimator):
 		if self.valid_values is not None:
 			for col in self.categorical_columns:
 				if col in data.columns:
-					data = data[data[col].isin(self.valid_values[col])]
+					if col == "ring-type":
+						mask_with_ring = (data["has-ring"] == 't')
+						mask_valid_ring = data[col].isin(self.valid_values[col])
+						data = data[~(mask_with_ring & ~mask_valid_ring)]
+					else:
+						data = data[data[col].isin(self.valid_values[col])]
 
-		# Если после фильтрации ничего не осталось — отрабатываем это
 		if data.shape[0] == 0:
 			raise ValueError("No samples left after filtering by valid_values. Check your input data.")
 

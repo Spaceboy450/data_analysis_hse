@@ -1,12 +1,12 @@
 {
   "cap-shape": {
     "type": "text",
-    "image": "resources/cap-shape.jpg",
+    "image": "../resources/cap-shape.jpg",
     "possible_values": ["Колокольчатая","Коническая", "Выпуклая", "Плоская", "С выступом",  "Вогнутая"]
   },
   "cap-surface": {
     "type": "text",
-    "image": "resources/cap-surface.jpg",
+    "image": "../resources/cap-surface.jpg",
     "possible_values": ["Волокнистая",  "С бороздками",  "Чешуйчатая", "Гладкая"]
   },
   "cap-color": {
@@ -20,7 +20,7 @@
   },
   "gill-attachment": {
     "type": "text",
-    "image": "resources/gill-attachment.jpg",
+    "image": "../resources/gill-attachment.jpg",
     "possible_values": ["Приросшие", "Нисходящие (сползают по ножке вниз)", "Свободные", "Приросшие к ножке зубцом"]
   },
   "gill-color": {
@@ -39,7 +39,7 @@
   },
   "ring-type": {
     "type": "text",
-    "image": "resources/ring-type.jpg",
+    "image": "../resources/ring-type.jpg",
     "possible_values": ["Паутинистое", "Исчезающее", "Плоское", "Крупное", "Отсутсвует", "Юбкообразное", "Раструбовидное", "Кольцевая зона или след"],
     "prerequisites": ["has-ring"]
   },
