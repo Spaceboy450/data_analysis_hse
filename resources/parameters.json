@@ -1,0 +1,63 @@
+{
+  "cap-shape": {
+    "type": "text",
+    "image": "resources/cap-shape.jpg",
+    "possible_values": ["Колокольчатая","Коническая", "Выпуклая", "Плоская", "С выступом",  "Вогнутая"]
+  },
+  "cap-surface": {
+    "type": "text",
+    "image": "resources/cap-surface.jpg",
+    "possible_values": ["Волокнистая",  "С бороздками",  "Чешуйчатая", "Гладкая"]
+  },
+  "cap-color": {
+    "type": "text",
+    "possible_values": ["Коричневый", "Охристый", "Коричнево-оранжевый", "Серый","Зеленый", "Розовый", "Фиолетовый", "Красный", "Белый",
+                                        "Желтый"]
+  },
+  "does-bruise-or-bleed": {
+    "type": "text",
+    "possible_values": ["Да", "Нет"]
+  },
+  "gill-attachment": {
+    "type": "text",
+    "image": "resources/gill-attachment.jpg",
+    "possible_values": ["Приросшие", "Нисходящие (сползают по ножке вниз)", "Свободные", "Приросшие к ножке зубцом"]
+  },
+  "gill-color": {
+    "type": "text",
+    "possible_values": ["Черный","Коричневый", "Желтовато-коричневый","Шоколадный", "Серый","Зеленый", "Оранжевый" ,"Розовый", "Фиолетовый", "Красный", "Белый",
+                                        "Желтый"]
+  },
+  "stem-color": {
+    "type": "text",
+    "possible_values": ["Коричневый", "Охристый", "Коричнево-оранжевый", "Серый","Оранжевый", "Розовый",  "Красный", "Белый",
+                                        "Желтый"]
+  },
+  "has-ring": {
+    "type": "text",
+    "possible_values": ["true", "false"]
+  },
+  "ring-type": {
+    "type": "text",
+    "image": "resources/ring-type.jpg",
+    "possible_values": ["Паутинистое", "Исчезающее", "Плоское", "Крупное", "Отсутсвует", "Юбкообразное", "Раструбовидное", "Кольцевая зона или след"],
+    "prerequisites": ["has-ring"]
+  },
+  "habitat": {
+    "type": "text",
+    "possible_values": ["Трава", "Лиственная подстилка", "Луга", "Тропинки", "Город", "Свалки", "Леса"]
+  },
+  "season": {
+    "type": "text",
+    "possible_values": ["Лето", "Осень", "Зима", "Весна"]
+  },
+  "cap-diameter": {
+    "type": "number"
+  },
+  "stem-height": {
+    "type": "number"
+  },
+  "stem-width": {
+    "type": "number"
+  }
+}
