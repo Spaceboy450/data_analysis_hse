@@ -24,12 +24,8 @@ data/stem-root.pick
 data/stem-surface.pick
 data/veil-color.pick
 data/veil-type.pick
-my_preprocessor.pkl
 notes/.DS_Store
 notes/catboost_info/catboost_training.json
 notes/catboost_info/learn/events.out.tfevents
 notes/catboost_info/learn_error.tsv
 notes/catboost_info/time_left.tsv
-notes/classifier.cbm
-notes/my_preprocessor.joblib
-notes/my_preprocessor.pkl
