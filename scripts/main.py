@@ -9,10 +9,10 @@ import pandas as pd
 # import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-# import os
+import os
 
-# current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# os.chdir(current_dir)
+os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 # ********************************************
 # ********** Предобработка данных ************
@@ -43,8 +43,9 @@ def configure_guides(path):
         result[guide_name] = guide_data.copy()
     return result
 
+file_path = ('./data')
 
-guides = configure_guides('./data')
+guides = configure_guides(file_path)
 
 # Creating dictionary with valid values of each feature to filter invalid rows of df
 valid_values = {}
