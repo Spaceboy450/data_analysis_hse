@@ -2,7 +2,7 @@ import json
 import gradio as gr
 
 def fetch_parameters():
-    with open("../resources/parameters.json") as file:
+    with open("resources/parameters.json") as file:
         params = json.load(file)
 
     parameters = []
@@ -150,7 +150,7 @@ def main():
                 return letters[index]
 
             model = CatBoostClassifier()
-            model.load_model("../notes/classifier.cbm")
+            model.load_model("notes/classifier.cbm")
 
             preprocessor = joblib.load("my_preprocessor.pkl")
 

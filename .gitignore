@@ -1,2 +1,4 @@
 .venv/
 .gradio/
+data/dataset.csv
+__pycache__/
