@@ -33,9 +33,6 @@ def configure_guides(path):
     file = pd.ExcelFile(f'{path}/store.xlsx')
 
     for guide_name in file.sheet_names[1:]:
-        # variable_name = name.lower().replace('-', '_') + '_guide'
-        # exec(f'{variable_name} = file.parse(name)')
-        # exec(f'{variable_name}.to_pickle("./work/data/{name}.pick")')
         guide_data = file.parse(guide_name)
         guide_data.to_pickle(f"{path}/{guide_name}.pick")
         result[guide_name] = guide_data.copy()
