@@ -5,14 +5,12 @@ Python project. Binary classification of mushrooms.
 Performed by: Andreev Alexander, Chapaykin Arseniy, Ro Alexander, Shmelev Anton 
 """
 
+import os
 import pandas as pd
-# import numpy as np
 import seaborn as sns
-import matplotlib.pyplot as plt
-# import os
 
-# current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# os.chdir(current_dir)
+os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 # ********************************************
 # ********** Предобработка данных ************
@@ -35,16 +33,14 @@ def configure_guides(path):
     file = pd.ExcelFile(f'{path}/store.xlsx')
 
     for guide_name in file.sheet_names[1:]:
-        # variable_name = name.lower().replace('-', '_') + '_guide'
-        # exec(f'{variable_name} = file.parse(name)')
-        # exec(f'{variable_name}.to_pickle("./work/data/{name}.pick")')
         guide_data = file.parse(guide_name)
         guide_data.to_pickle(f"{path}/{guide_name}.pick")
         result[guide_name] = guide_data.copy()
     return result
 
+FILE_PATH = './data'
 
-guides = configure_guides('./data')
+guides = configure_guides(FILE_PATH)
 
 # Creating dictionary with valid values of each feature to filter invalid rows of df
 valid_values = {}
@@ -117,16 +113,7 @@ def feature_class_correlation(dataframe, feature):
                         - 2-й уровень: метки классов (e - съедобный, p - ядовитый)
                         - значения: количество соответствующих наблюдений
     """
-    return dataframe.groupby(feature)['class'].value_counts()
-
-
-print('Корреляция значений конкретного категориального признака и целевого класса.')
-while True:
-    temp_feature = input('Введите название признака: ')
-    if temp_feature in cat_columns:
-        break
-    print('Не найдено соответствующего категориального признака')
-print(feature_class_correlation(data, 'cap-shape'))
+    return dataframe.groupby(feature)['class'].value_counts().reset_index(name='count')
 
 
 def feature_mean_cap_diameter(dataframe, feature_1, feature_2, feature_3):
@@ -136,7 +123,7 @@ def feature_mean_cap_diameter(dataframe, feature_1, feature_2, feature_3):
 
         Args:
                 dataframe (pd.DataFrame): Рассматриваемый датафрейм
-                feature_1 (str): Название первого признака 
+                feature_1 (str): Название первого признака
                 feature_2 (str): Название второго признака
                 feature_3 (str): Название третьего признака
 
@@ -152,27 +139,11 @@ def feature_mean_cap_diameter(dataframe, feature_1, feature_2, feature_3):
     )
 
 
-print('Сводная таблица со средним диаметром шляпки гриба по трём признакам')
-while True:
-    temp_feature_1, temp_feature_2, temp_feature_3 = input(
-        'Введите названия трёх категориальных признаков через пробел: '
-    ).split()[:3]
-    if (temp_feature_1 in cat_columns
-        and temp_feature_2 in cat_columns
-            and temp_feature_3 in cat_columns):
-        break
-    print('Не найдено соответствующих категориальных признаков')
-print(feature_mean_cap_diameter(data,
-                                temp_feature_1,
-                                temp_feature_2,
-                                temp_feature_3
-                                ))
-
 
 def class_ranged_by_stem_height(dataframe, begin, end):
     """
-        Отбирает грибы у которых значение высоты 
-    ножки лежит в заданном диапазоне и возвращает серию с их классами. 
+        Отбирает грибы у которых значение высоты
+    ножки лежит в заданном диапазоне и возвращает серию с их классами.
 
         Args:
                 dataframe (pd.DataFrame): Рассматриваемый датафрейм
@@ -187,17 +158,12 @@ def class_ranged_by_stem_height(dataframe, begin, end):
     return df_picked['class']
 
 
-print('Классы грибов, имеющих высоту ножки из заданного диапазона')
-l, r = map(int, input(
-    'Введите нижнюю и верхнюю границы диапазона через пробел: ').split())
-print(class_ranged_by_stem_height(data, l, r))
-
 
 def cap_diams_stem_heights(dataframe, width_begin, width_end, season):
     """
         Отбирает грибы по конкретному сезону произрастания у которых
-    значение ширины ножки лежит в заданном диапазоне 
-    и возвращает серию с их диаметрами шляпки и высотами ножки. 
+    значение ширины ножки лежит в заданном диапазоне
+    и возвращает серию с их диаметрами шляпки и высотами ножки.
 
         Args:
                 dataframe (pd.DataFrame): Рассматриваемый датафрейм
@@ -221,17 +187,6 @@ def cap_diams_stem_heights(dataframe, width_begin, width_end, season):
     return df_clean[['cap-diameter', 'stem-height']]
 
 
-print('Значения диаметра шляпки и высоты ножки грибов,'
-      'имеющих заданный сезон произрастания и'
-      'ширина ножки которых лежит в заданном диапазоне')
-while True:
-    l, r = map(int, input(
-        'Введите нижнюю и верхнюю границы диапазона через пробел: ').split())
-    s = input('Введите сезон: ')
-    if s in ['a', 'w', 'u', 's']:
-        break
-print(cap_diams_stem_heights(data, l, r, s))
-
 # ******************************************
 # ********** Графические отчёты ************
 # ******************************************
@@ -249,17 +204,11 @@ def class_boxplot(dataframe, numeric_feature):
     Returns:
         matplotlib.axes.Axes: Объект Axes с построенным boxplot
     """
-    return sns.boxplot(data=dataframe, x='class', y=numeric_feature, hue='class', showfliers=False)
+    plot = sns.boxplot(data=dataframe, x='class', y=numeric_feature, hue='class', showfliers=False)
+    fig = plot.get_figure()
+    fig.savefig("./graphics/class_boxplot.png")
 
 
-print('Ящик с усами для числового признака, сгруппированного по классам грибов')
-while True:
-    temp_feature = input('Введите числовой признак: ')
-    if temp_feature in num_columns:
-        break
-    print('Не найдено соответствующего числового признака')
-ax = class_boxplot(data, temp_feature)
-plt.show()
 
 
 def cap_diameter_histplot(dataframe, hue):
@@ -274,17 +223,11 @@ def cap_diameter_histplot(dataframe, hue):
     Returns:
         matplotlib.axes.Axes: Объект Axes с построенной гистограммой
     """
-    return sns.histplot(data=dataframe, x='cap-diameter', hue=hue, binrange=(0, 17))
+    plot = sns.histplot(data=dataframe, x='cap-diameter', hue=hue, binrange=(0, 17))
+    fig = plot.get_figure()
+    fig.savefig("./graphics/cap_diameter_histplot.png")
 
 
-print('Гистограмма распределения диаметров шляпки грибов с разделением по категориальному признаку')
-while True:
-    temp_feature = input('Введите категориальный признак: ')
-    if temp_feature in cat_columns:
-        break
-    print('Не найдено соответствующего категориального признака')
-ax = cap_diameter_histplot(data, temp_feature)
-plt.show()
 
 
 def stem_height_scatterplot(dataframe, numeric_feature, hue):
@@ -300,20 +243,9 @@ def stem_height_scatterplot(dataframe, numeric_feature, hue):
     Returns:
         matplotlib.axes.Axes: Объект Axes с построенным точечным графиком
     """
-    return sns.scatterplot(data=dataframe, x="stem-height", y=numeric_feature, hue=hue)
-
-
-print('Точечный график зависимости между высотой ножки гриба'
-      'и заданным числовым признаком с разделением'
-      'по некоторому категориальному признаку')
-while True:
-    temp_feature_1 = input('Введите числовой признак: ')
-    temp_feature_2 = input('Введите категориальный признак: ')
-    if temp_feature_1 in num_columns and temp_feature_2 in cat_columns:
-        break
-    print('Не найден один или несколько из введенных признаков')
-ax = stem_height_scatterplot(data, temp_feature_1, temp_feature_2)
-plt.show()
+    plot = sns.scatterplot(data=dataframe, x="stem-height", y=numeric_feature, hue=hue)
+    fig = plot.get_figure()
+    fig.savefig("./graphics/stem_height_scatterplot.png")
 
 
 def stem_width_boxplot(dataframe, object_feature):
@@ -328,15 +260,8 @@ def stem_width_boxplot(dataframe, object_feature):
     Returns:
         matplotlib.axes.Axes: Объект Axes с построенным boxplot
     """
-    return sns.boxplot(data=dataframe, x='cap-diameter', y=object_feature, showfliers=False)
+    plot =  sns.boxplot(data=dataframe, x='cap-diameter', y=object_feature, showfliers=False)
+    fig = plot.get_figure()
+    fig.savefig("./graphics/stem_width_boxplot.png")
 
 
-print('Boxplot (ящик с усами) для диаметра шляпки,'
-      'сгруппированного по заданному категориальному признаку')
-while True:
-    temp_feature = input('Введите категориальный признак: ')
-    if temp_feature in cat_columns:
-        break
-    print('Не найдено соответствующего категориального признака')
-ax = stem_width_boxplot(data, temp_feature)
-plt.show()
