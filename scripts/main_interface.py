@@ -305,13 +305,13 @@ def head():
 
             result = feature_mean_cap_diameter(data, feature_1, feature_2, feature_3)
             result.to_csv('./graphics/feature_mean_cap_diam.csv')
-            return result
+            return result.to_html()
 
         btn = gr.Button("Submit")
         btn.click(# pylint: disable=no-member
             fn=feature_mean_cap_diam,
             inputs=[comp[1] for comp in tmp_lst.values()],
-            outputs=gr.DataFrame()
+            outputs=gr.HTML()
         )
         class_begin = tmp[-10]["name"]
         class_end = tmp[-9]["name"]
