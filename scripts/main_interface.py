@@ -16,6 +16,7 @@ from main import stem_height_scatterplot, stem_width_boxplot
 import gradio as gr
 
 
+# Автор: Ро Александр
 def fetch_parameters():
     """
     Загружает параметры из JSON-файла и форматирует их в список словарей.
@@ -41,6 +42,7 @@ def fetch_parameters():
     return parameters
 
 
+# Автор: Шмелев Антон
 def create_component(param):
     """
     Создаёт UI-компонент Gradio на основе типа параметра.
@@ -75,6 +77,7 @@ def create_component(param):
     raise KeyError(f"Invalid type {param['type']}")
 
 
+# Автор: Ро Александр
 def setup_visibility(components, connections):
     """
     Настраивает динамическую видимость компонентов интерфейса на основе связей.
@@ -102,6 +105,7 @@ def setup_visibility(components, connections):
 
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-statements
+# Авторы: Чапайкин Арсений, Андреев Александр
 def head():
     """
     Главная функция отображения интерфейса
@@ -116,7 +120,7 @@ def head():
                 if param["prerequisites"]:
                     connections.extend((parent, param["name"])
                                        for parent in param["prerequisites"])
-
+        
         def debug(*args):
             """
                 Отладочная функция, содержащая данные о возможных значениях параметров грибов
