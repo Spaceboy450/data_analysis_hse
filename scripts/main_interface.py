@@ -16,6 +16,7 @@ from main import stem_height_scatterplot, stem_width_boxplot
 import gradio as gr
 
 
+# Автор: Ро Александр
 def fetch_parameters():
     """
     Загружает параметры из JSON-файла и форматирует их в список словарей.
@@ -41,6 +42,7 @@ def fetch_parameters():
     return parameters
 
 
+# Автор: Шмелев Антон
 def create_component(param):
     """
     Создаёт UI-компонент Gradio на основе типа параметра.
@@ -75,6 +77,7 @@ def create_component(param):
     raise KeyError(f"Invalid type {param['type']}")
 
 
+# Автор: Ро Александр
 def setup_visibility(components, connections):
     """
     Настраивает динамическую видимость компонентов интерфейса на основе связей.
@@ -102,6 +105,7 @@ def setup_visibility(components, connections):
 
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-statements
+# Авторы: Чапайкин Арсений, Андреев Александр
 def head():
     """
     Главная функция отображения интерфейса
@@ -116,7 +120,7 @@ def head():
                 if param["prerequisites"]:
                     connections.extend((parent, param["name"])
                                        for parent in param["prerequisites"])
-
+        
         def debug(*args):
             """
                 Отладочная функция, содержащая данные о возможных значениях параметров грибов
@@ -230,6 +234,14 @@ def head():
             param = list(components.keys())
             input_dict = {name: get_letter_by_value(name, value) for name, # noqa
                           value in zip(param, args)}
+
+            values = list(input_dict.values())
+            values = values[:8] + values[9:]
+
+
+            while None in values:
+                raise gr.Error("Выбери все параметры для гриба")
+
             data_dict = pd.DataFrame(input_dict, index=[0])
             pd.set_option('display.max_columns', None)
             x_prediction = preprocessor.transform(data_dict)
@@ -258,6 +270,10 @@ def head():
                 Returns:
                     pd.DataFrame: Таблица с рассчитанной корреляцией.
                 """
+
+            while None == feature:
+                raise gr.Error("Выбери все параметры для гриба")
+
             result = feature_class_correlation(data, feature)
             result.to_csv('./graphics/feature_class_corr.csv')
             return result
@@ -285,16 +301,21 @@ def head():
                 Returns:
                     pd.DataFrame: Таблица со средними значениями диаметров.
                 """
+
+            while None in args[0] or len(args[0]) < 3:
+                raise gr.Error("Выбери все параметры для гриба")
+
             feature_1, feature_2, feature_3 = args[0]
+
             result = feature_mean_cap_diameter(data, feature_1, feature_2, feature_3)
             result.to_csv('./graphics/feature_mean_cap_diam.csv')
-            return result
+            return result.to_html()
 
         btn = gr.Button("Submit")
         btn.click(# pylint: disable=no-member
             fn=feature_mean_cap_diam,
             inputs=[comp[1] for comp in tmp_lst.values()],
-            outputs=gr.DataFrame()
+            outputs=gr.HTML()
         )
         class_begin = tmp[-10]["name"]
         class_end = tmp[-9]["name"]
@@ -311,6 +332,10 @@ def head():
                Returns:
                    pd.DataFrame: Таблица с распределением по диапазону высот.
                """
+
+            while None in args or len(args) < 2:
+                raise gr.Error("Выбери все параметры для гриба")
+
             begin, end = args
             result = class_ranged_by_stem_height(data, begin, end).to_frame().reset_index()
             result.to_csv('./graphics/class_ranged_by_height.csv')
@@ -340,6 +365,10 @@ def head():
                 Returns:
                     pd.DataFrame: Таблица с распределением по диапазонам диаметров и сезонам.
                 """
+
+            while None in args or len(args) < 3:
+                raise gr.Error("Выбери все параметры для гриба")
+
             width_begin, width_end, season = args
             result = cap_diams_stem_heights(data, width_begin, width_end, season).reset_index()
             result.to_csv('./graphics/cap_diams_heights.csv')
@@ -365,6 +394,10 @@ def head():
                 Returns:
                     str: Путь к сохранённому изображению.
                 """
+
+            while None == numeric_feature:
+                raise gr.Error("Выбери все параметры для гриба")
+
             class_boxplot(data, numeric_feature)
             return "./graphics/class_boxplot.png"
 
@@ -389,6 +422,10 @@ def head():
                Returns:
                    str: Путь к сохранённому изображению.
                """
+
+            while None == numeric_feature:
+                raise gr.Error("Выбери все параметры для гриба")
+
             cap_diameter_histplot(data, numeric_feature)
             return "./graphics/cap_diameter_histplot.png"
 
@@ -414,6 +451,10 @@ def head():
                 Returns:
                     str: Путь к сохранённому изображению.
                 """
+
+            while None in args or len(args) < 2:
+                raise gr.Error("Выбери все параметры для гриба")
+
             numeric_feature, cat_feature = args
             stem_height_scatterplot(data, numeric_feature, cat_feature)
             return "./graphics/stem_height_scatterplot.png"
@@ -438,6 +479,10 @@ def head():
                 Returns:
                     str: Путь к сохранённому изображению.
                 """
+
+            while None == feature:
+                raise gr.Error("Выбери все параметры для гриба")
+
             stem_width_boxplot(data, feature)
             return "./graphics/stem_width_boxplot.png"
 

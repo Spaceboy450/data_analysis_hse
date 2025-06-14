@@ -2,6 +2,8 @@ from sklearn.base import TransformerMixin, BaseEstimator
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from scipy.sparse import csr_matrix, hstack
 
+
+# Автор: Шмелев Антон
 class DataPreprocessor(TransformerMixin, BaseEstimator):
 	def __init__(self, needed_columns=None, valid_values=None, target_column=None):
 		self.scaler = StandardScaler()

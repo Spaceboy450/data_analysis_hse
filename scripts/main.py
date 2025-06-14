@@ -17,6 +17,7 @@ os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # ********************************************
 
 
+# Автор: Шмелев Антон
 def configure_guides(path):
     """
         Конфигурирует справочники из MS Excel файла, также записывает их в pickle-файлы.
@@ -52,6 +53,7 @@ for name, guide in guides.items():
 data = pd.read_csv('./data/dataset.csv')
 
 
+# Автор: Чапайкин Арсений
 def count_na_percentage(dataframe, feature):
     """
         Подсчитывает процент NaN значений от общего числа в колонке feature датафрейма df.
@@ -93,11 +95,13 @@ for col in cat_columns:
     data[col] = data[col].fillna(data[col].mode()[0])
     data = data[data[col].isin(valid_values[col])]
 
+
 # ****************************************
 # ********** Текстовые отчёты ************
 # ****************************************
 
 
+# Автор: Ро Александр
 def feature_class_correlation(dataframe, feature):
     """
         Считает количество встречаемых значений указанного
@@ -116,6 +120,7 @@ def feature_class_correlation(dataframe, feature):
     return dataframe.groupby(feature)['class'].value_counts().reset_index(name='count')
 
 
+# Автор: Ро Александр
 def feature_mean_cap_diameter(dataframe, feature_1, feature_2, feature_3):
     """
         Строит сводную таблицу со средним диаметром шляпки
@@ -139,7 +144,7 @@ def feature_mean_cap_diameter(dataframe, feature_1, feature_2, feature_3):
     )
 
 
-
+# Автор: Ро Александр
 def class_ranged_by_stem_height(dataframe, begin, end):
     """
         Отбирает грибы у которых значение высоты
@@ -158,7 +163,7 @@ def class_ranged_by_stem_height(dataframe, begin, end):
     return df_picked['class']
 
 
-
+# Автор: Андреев Александр
 def cap_diams_stem_heights(dataframe, width_begin, width_end, season):
     """
         Отбирает грибы по конкретному сезону произрастания у которых
@@ -192,6 +197,7 @@ def cap_diams_stem_heights(dataframe, width_begin, width_end, season):
 # ******************************************
 
 
+# Автор: Андреев Александр
 def class_boxplot(dataframe, numeric_feature):
     """
     Строит boxplot (ящик с усами) для числового признака,
@@ -209,8 +215,7 @@ def class_boxplot(dataframe, numeric_feature):
     fig.savefig("./graphics/class_boxplot.png")
 
 
-
-
+# Автор: Андреев Александр
 def cap_diameter_histplot(dataframe, hue):
     """
     Строит гистограмму распределения диаметров шляпки
@@ -228,8 +233,7 @@ def cap_diameter_histplot(dataframe, hue):
     fig.savefig("./graphics/cap_diameter_histplot.png")
 
 
-
-
+# Автор: Чапайкин Арсений
 def stem_height_scatterplot(dataframe, numeric_feature, hue):
     """
     Строит точечный график зависимости между высотой ножки
@@ -248,6 +252,7 @@ def stem_height_scatterplot(dataframe, numeric_feature, hue):
     fig.savefig("./graphics/stem_height_scatterplot.png")
 
 
+# Автор: Чапайкин Арсений
 def stem_width_boxplot(dataframe, object_feature):
     """
     Строит boxplot (ящик с усами) для диаметра шляпки,
