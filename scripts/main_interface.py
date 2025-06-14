@@ -120,7 +120,6 @@ def head():
                 if param["prerequisites"]:
                     connections.extend((parent, param["name"])
                                        for parent in param["prerequisites"])
-        
         def debug(*args):
             """
                 Отладочная функция, содержащая данные о возможных значениях параметров грибов
@@ -271,7 +270,7 @@ def head():
                     pd.DataFrame: Таблица с рассчитанной корреляцией.
                 """
 
-            while None == feature:
+            while None is feature:
                 raise gr.Error("Выбери все параметры для гриба")
 
             result = feature_class_correlation(data, feature)
@@ -395,7 +394,7 @@ def head():
                     str: Путь к сохранённому изображению.
                 """
 
-            while None == numeric_feature:
+            while None is numeric_feature:
                 raise gr.Error("Выбери все параметры для гриба")
 
             class_boxplot(data, numeric_feature)
@@ -423,7 +422,7 @@ def head():
                    str: Путь к сохранённому изображению.
                """
 
-            while None == numeric_feature:
+            while None is numeric_feature:
                 raise gr.Error("Выбери все параметры для гриба")
 
             cap_diameter_histplot(data, numeric_feature)
@@ -480,7 +479,7 @@ def head():
                     str: Путь к сохранённому изображению.
                 """
 
-            while None == feature:
+            while None is feature:
                 raise gr.Error("Выбери все параметры для гриба")
 
             stem_width_boxplot(data, feature)
