@@ -387,7 +387,7 @@ def head():
                     *args: Переменное количество аргументов, не используется в теле функции.
             """
             model = CatBoostClassifier()
-            model.load_model("./notes/classifier.cbm")
+            model.load_model("./data/classifier.cbm")
             preprocessor = joblib.load("./scripts/my_preprocessor.pkl")
             param = list(components.keys())
             pairs = zip(param, args)
