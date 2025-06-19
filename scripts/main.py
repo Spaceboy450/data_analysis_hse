@@ -213,6 +213,7 @@ def class_boxplot(dataframe, numeric_feature):
     plot = sns.boxplot(data=dataframe, x='class', y=numeric_feature, hue='class', showfliers=False)
     fig = plot.get_figure()
     fig.savefig("./graphics/class_boxplot.png")
+    plot.cla()
 
 
 # Автор: Андреев Александр
@@ -231,6 +232,7 @@ def cap_diameter_histplot(dataframe, hue):
     plot = sns.histplot(data=dataframe, x='cap-diameter', hue=hue, binrange=(0, 17))
     fig = plot.get_figure()
     fig.savefig("./graphics/cap_diameter_histplot.png")
+    plot.cla()
 
 
 # Автор: Чапайкин Арсений
@@ -250,6 +252,7 @@ def stem_height_scatterplot(dataframe, numeric_feature, hue):
     plot = sns.scatterplot(data=dataframe, x="stem-height", y=numeric_feature, hue=hue)
     fig = plot.get_figure()
     fig.savefig("./graphics/stem_height_scatterplot.png")
+    plot.cla()
 
 
 # Автор: Чапайкин Арсений
@@ -268,5 +271,6 @@ def stem_width_boxplot(dataframe, object_feature):
     plot =  sns.boxplot(data=dataframe, x='cap-diameter', y=object_feature, showfliers=False)
     fig = plot.get_figure()
     fig.savefig("./graphics/stem_width_boxplot.png")
+    plot.cla()
 
 

@@ -6,3 +6,4 @@ __pycache__/
 data/*.pick
 notes/catboost_info/
 .python-version
+graphics/
