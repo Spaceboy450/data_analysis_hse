@@ -17,7 +17,6 @@ import gradio as gr
 
 
 
-# Автор: Ро Александр
 def fetch_parameters():
     """
     Загружает параметры из JSON-файла и форматирует их в список словарей.
@@ -43,7 +42,6 @@ def fetch_parameters():
     return parameters
 
 
-# Автор: Шмелев Антон
 def create_component(param):
     """
     Создаёт UI-компонент Gradio на основе типа параметра.
@@ -78,7 +76,6 @@ def create_component(param):
     raise KeyError(f"Invalid type {param['type']}")
 
 
-# Автор: Ро Александр
 def setup_visibility(components, connections):
     """
     Настраивает динамическую видимость компонентов интерфейса на основе связей.
@@ -165,7 +162,7 @@ letters_map = {
             'habitat': ['g', 'l', 'm', 'p', 'u', 'w', 'd'],
             'season': ['a', 'w', 'u', 's']
         }
-# Автор: Ро Александр
+
 def get_letter_by_value(feature: str, value) -> str | int | None:
     """
             Возвращает буквенное обозначение значения параметра
@@ -198,7 +195,7 @@ def get_letter_by_value(feature: str, value) -> str | int | None:
 
     return letters[index]
 
-# Автор: Ро Александр
+
 def feature_class_corr(feature):
     """
         Вычисляет корреляцию между указанным признаком и целевым классом,
@@ -218,7 +215,7 @@ def feature_class_corr(feature):
     result.to_csv('./graphics/feature_class_corr.csv')
     return result
 
-# Автор: Андреев Алексанр
+
 def feature_mean_cap_diam(*args):
     """
         Вычисляет средний диаметр шляпки гриба для комбинации трёх заданных параметров,
@@ -240,7 +237,7 @@ def feature_mean_cap_diam(*args):
     result.to_csv('./graphics/feature_mean_cap_diam.csv')
     return result.to_html()
 
-# Автор: Андреев Александр
+
 def class_ranged_by_height(*args):
     """
        Группирует грибы по диапазону высоты ножки и сохраняет результат в CSV-файл.
@@ -260,7 +257,7 @@ def class_ranged_by_height(*args):
     result.to_csv('./graphics/class_ranged_by_height.csv')
     return result
 
-# Автор: Чапайкин Арсений
+
 def cap_diams_heights(*args):
     """
         Группирует данные по диапазону диаметров шляпки и сезону,
@@ -281,7 +278,7 @@ def cap_diams_heights(*args):
     result.to_csv('./graphics/cap_diams_heights.csv')
     return result
 
-# Автор: Чапайкин Арсений
+
 def boxplot(numeric_feature):
     """
         Строит boxplot для числового признака по классам грибов
@@ -300,7 +297,7 @@ def boxplot(numeric_feature):
     class_boxplot(data, numeric_feature)
     return "./graphics/class_boxplot.png"
 
-# Автор: Чапайкин Арсений
+
 def cap_diameter_hist(numeric_feature):
     """
        Строит гистограмму распределения диаметров шляпок грибов
@@ -319,7 +316,7 @@ def cap_diameter_hist(numeric_feature):
     cap_diameter_histplot(data, numeric_feature)
     return "./graphics/cap_diameter_histplot.png"
 
-# Автор: Шмелев Антон
+
 def stem_scatterplot(*args):
     """
         Строит scatterplot между числовым признаком и категориальным,
@@ -339,7 +336,7 @@ def stem_scatterplot(*args):
     stem_height_scatterplot(data, numeric_feature, cat_feature)
     return "./graphics/stem_height_scatterplot.png"
 
-# Автор: Шмелев Антон
+
 def stem_boxplot(feature):
     """
         Строит boxplot для ширины ножки гриба по классам и сохраняет изображение.
@@ -358,7 +355,7 @@ def stem_boxplot(feature):
     return "./graphics/stem_width_boxplot.png"
 
 
-# Авторы: Чапайкин Арсений, Андреев Александр
+
 def head():
     """
     Главная функция отображения интерфейса
